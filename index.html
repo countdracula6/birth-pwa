@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birth of Machines Video Downloader</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="manifest" href="manifest.json">
+</head>
+<body>
+    <div class="container">
+        <h1>🔥 Birth of Machines Video Downloader 🔥</h1>
+        <input type="text" id="videoURL" placeholder="Paste Video URL Here">
+        <button onclick="downloadVideo()">Download</button>
+        <div id="status"></div>
+    </div>
+
+    <script>
+        function downloadVideo() {
+            let url = document.getElementById("videoURL").value;
+            document.getElementById("status").innerHTML = "Processing...";
+
+            fetch("/download", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ url: url })
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("status").innerHTML = `<a href="${data.download_url}" download>Download Now</a>`;
+            });
+        }
+    </script>
+</body>
+</html>
